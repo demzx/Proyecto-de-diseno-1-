@@ -25,7 +25,6 @@ module divisor50MHZmodule (
  ); 
  
  
- reg [5:0]contador ; 
 
  
 always @(posedge Clck_in,posedge reset_Clock) 
@@ -33,17 +32,15 @@ always @(posedge Clck_in,posedge reset_Clock)
       if (reset_Clock)
 		   begin
 		   Clock_out <= 0;
-			contador <= 0;
 			end 
       else
           begin		
-		    if (contador == 6'd49)  
-		        begin                    
-			     contador <=1'd0;       
-		        Clock_out <= ~Clock_out;
+		    if (Clock_out == 0)  
+		        begin                        
+		        Clock_out <= Clock_out+1'b1;
 		        end 
 		     else 
-		        contador <= contador + 1'b1; 
+		        Clock_out <= 0; 
           end 
  end 
   
