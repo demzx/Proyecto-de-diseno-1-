@@ -18,6 +18,7 @@
 // Additional Comments: 
 //
 //////////////////////////////////////////////////////////////////////////////////
+
 module Protocolo_ADC(
 input wire Clock_Muestreo,reset, 
 input wire data_ADC,
@@ -25,7 +26,11 @@ input wire start,
 output reg done,
 output wire CS,
 output wire [3:0] data_basura,
+////CREADO PARA REVISION
 output wire [11:0] Dato
+//output wire [3:0]contador,
+//output wire [1:0]Estado,
+//output wire [15:0]Dato_Moviendose
 );
  
 // se definen los estados de la maquina 
@@ -49,6 +54,7 @@ always@(posedge Clock_Muestreo,posedge reset)
 		      if(reset)
 				   begin
 				   Data_Act <= 0;
+//				   Data_Act <= 1;
                CS_A <= 1;
 					Estado_Act <= 0;
 					contador_A <= 0;
@@ -90,13 +96,25 @@ always @*
 							else 
 							  begin 
 							  Data_next = {data_ADC,Data_next[15:1]};
+							 // Data_next = {Data_next[14:0],data_ADC};
 							  contador_N = contador_N + 1'b1;
 							  end
 			 Listo :
 			            begin
 							done = 1'b1;
 							CS_N = 1'b1;
-							Dato_final_N = Data_next[15:4];
+							Dato_final_N [0] = Data_next[15];
+							Dato_final_N [1] = Data_next[14];
+                     Dato_final_N [2] = Data_next[13];
+						   Dato_final_N [3] = Data_next[12];
+						   Dato_final_N [4] = Data_next[11];
+						   Dato_final_N [5] = Data_next[10];
+						   Dato_final_N [6] = Data_next[9];
+						   Dato_final_N [7] = Data_next[8];
+						   Dato_final_N [8] = Data_next[7];
+						   Dato_final_N [9] = Data_next[6];
+                     Dato_final_N [10] = Data_next[5];
+                     Dato_final_N [11] = Data_next[4];
 							Estado_Next = Inicio;
 							end 
 							
@@ -107,4 +125,8 @@ always @*
 assign CS = CS_A;
 assign data_basura = Data_Act[3:0];
 assign Dato = Dato_final_N;
+//Revision
+//assign contador = contador_A;
+//assign Estado = Estado_Act;
+//assign Dato_Moviendose = Data_Act;
 endmodule

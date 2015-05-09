@@ -38,7 +38,7 @@ always@(posedge clk, posedge reset)
 always@*
    begin
 	q_next = q_actual;
-	if(~enable) // si el enable esta activado
+	if(enable) // si el enable esta activado
 	   q_next =  data_in; // se deja pasar el dato
 	else 
 	   q_next = q_actual; // sino se mantiene las salidas iguales 

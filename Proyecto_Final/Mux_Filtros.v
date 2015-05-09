@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 module Mux_Filtros #(parameter N = 23)
 (
- input wire signed [N-1:0] bajos,medios,altos,
+ input wire signed [N-1:0] bajos,medios,altos, SalidaTotal,
  input wire [1:0] caso,
  output wire signed [N-1:0] sal_Mux
     );
@@ -33,6 +33,7 @@ always@*
 	2'b00 : sal = bajos ; 
    2'b01 : sal = medios ; 
 	2'b10 : sal = altos ; 
+	2'b11 : sal = SalidaTotal ;
 
   default : sal = bajos;  
   endcase 
